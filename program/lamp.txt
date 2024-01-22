@@ -1,0 +1,96 @@
+# Assembler code 
+DEFINE LAMP 0x7fff
+DEFINE LC0 0x4000
+DEFINE LC1 0x4001
+DEFINE INIT0 0x1f4
+DEFINE INIT1 0x2710
+# DEFINE INIT0 0x5
+# DEFINE INIT1 0x3
+start:
+A=1
+D=A
+A=LAMP
+*A=D
+
+# delay 1s
+init:
+A=INIT0
+D=A
+A=LC0
+*A=D
+
+loop0:
+A=INIT1
+D=A
+A=LC1
+*A=D
+
+loop1:
+A=LC1
+D=*A
+A=gt
+D=D-1;JGT
+A=endloop1
+JMP
+gt:
+A=LC1
+*A=D
+A=loop1
+JMP
+endloop1:
+
+A=LC0
+D=*A
+A=gt0
+D=D-1;JGT
+A=endloop0
+JMP
+gt0:
+A=LC0
+*A=D
+A=loop0
+JMP
+endloop0:
+
+A=2
+D=A
+A=LAMP
+*A=D
+
+# delay 1s
+A=INIT0
+D=A
+A=LC0
+*A=D
+
+loop0_2:
+A=INIT1
+D=A
+A=LC1
+*A=D
+
+loop1_2:
+A=LC1
+D=*A
+A=gt_2
+D=D-1;JGT
+A=endloop1_2
+JMP
+gt_2:
+A=LC1
+*A=D
+A=loop1_2
+JMP
+endloop1_2:
+
+A=LC0
+D=*A
+A=gt0_2
+D=D-1;JGT
+A=start
+JMP
+gt0_2:
+A=LC0
+*A=D
+A=loop0_2
+JMP
